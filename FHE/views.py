@@ -73,7 +73,7 @@ def process_integers(request):
             return JsonResponse({'error': 'Invalid data format. Expected a list of integers.'}, status=400)
         
         result = predict_fetal_health(integers)
-        WeekData.objects.create(user=request.user.username, week_name=weekName, week_data=integers, week_abnormality=result)
+       # WeekData.objects.create(user=request.user.username, week_name=weekName, week_data=integers, week_abnormality=result)
         return JsonResponse({'result': result})
     except Exception as e:
         return JsonResponse({'error': str(e)}, status=400)
