@@ -2,7 +2,12 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from .forms import SignUpForm, UserLoginForm
-from .models import UserProfile
+from .models import UserProfile, WeekData
+from django.views.decorators.http import require_http_methods
+from django.http import JsonResponse
+import json
+from ml.final import predict_fetal_health
+from django.urls import reverse
 
 def user_login(request):
     if request.method == 'POST':
@@ -57,3 +62,29 @@ def signup(request):
 
 def signup_success(request):
     return render(request, 'signup_success.html')
+
+@require_http_methods(["POST"])
+def process_integers(request):
+    try:
+        data = json.loads(request.body)
+        integers = data.get('integers', [])
+        weekName = data.get('weekName', '')
+        if not isinstance(integers, list):
+            return JsonResponse({'error': 'Invalid data format. Expected a list of integers.'}, status=400)
+        
+        result = predict_fetal_health(integers)
+        WeekData.objects.create(user=request.user.username, week_name=weekName, week_data=integers, week_abnormality=result)
+        return JsonResponse({'result': result})
+    except Exception as e:
+        return JsonResponse({'error': str(e)}, status=400)
+    
+
+def input_form_view(request):
+    weekdatas = WeekData.objects.filter(user=request.user.username)
+    context = {
+        'range': range(1, 23),
+        'process_integers_url': reverse('process_integers'),
+        'user' : request.user,
+        'weekdatas': weekdatas 
+        }
+    return render(request, 'patients.html', context)

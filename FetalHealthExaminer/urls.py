@@ -24,4 +24,6 @@ urlpatterns = [
     path('home/', views.home, name='home'),
     path('signup/', views.signup, name='signup'),
     path('signup/success/', views.signup_success, name='signup_success'),
+    path('process_integers/', views.process_integers, name='process_integers'),
+     path('input_form/', views.input_form_view, name='input_form'),
 ]

@@ -10,3 +10,13 @@ class UserProfile(models.Model):
 
     def __str__(self):
         return self.user.username
+    
+
+class WeekData(models.Model):
+    user = models.TextField()
+    week_name = models.CharField(max_length=100)
+    week_data = models.JSONField()
+    week_abnormality = models.JSONField()
+
+    def __str__(self):
+        return f"{self.user.username} - {self.week_name}"
