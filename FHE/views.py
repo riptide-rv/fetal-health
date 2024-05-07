@@ -80,11 +80,11 @@ def process_integers(request):
     
 
 def input_form_view(request):
-    weekdatas = WeekData.objects.filter(user=request.user.username)
+    
     context = {
         'range': range(1, 23),
         'process_integers_url': reverse('process_integers'),
         'user' : request.user,
-        'weekdatas': weekdatas 
+        'weekdatas': ""
         }
     return render(request, 'patients.html', context)
