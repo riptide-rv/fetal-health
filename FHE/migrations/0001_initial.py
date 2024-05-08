@@ -24,15 +24,5 @@ class Migration(migrations.Migration):
                 ('city', models.CharField(max_length=100)),
                 ('user', models.OneToOneField(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
             ],
-        ),
-        migrations.CreateModel(
-            name='WeekData',
-            fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('user', models.TextField()),
-                ('week_name', models.CharField(max_length=100)),
-                ('week_data', models.JSONField()),
-                ('week_abnormality', models.JSONField()),
-            ],
-        ),
+        )
     ]

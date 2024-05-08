@@ -317,14 +317,28 @@
 
 
     </div>
+    
 
 
     <script>
-        console.log('weekdatas ','{{weekdatas}}')
-        const weekNames = [];
-        const columnNames = ['Column 1', 'Column 2', 'Column 3', 'Column 4', 'Column 5', 'Column 6', 'Column 7', 'Column 8', 'Column 9', 'Column 10', 'Column 11', 'Column 12', 'Column 13', 'Column 14', 'Column 15', 'Column 16', 'Column 17', 'Column 18', 'Column 19', 'Column 20', 'Column 21', 'Column 22'];
+       var weekdatas = JSON.parse('{{ weekdatas | safe }}');
+        console.log(weekdatas);
+        console.log('weekdatas ',weekdatas)
         const weekData = {};
         const weekabnormalData = {};
+        const weekNames = [];
+        for (week in weekdatas) {
+        
+            weekData[weekdatas[week].fields.week_name] = weekdatas[week].fields.numbers;
+            weekabnormalData[weekdatas[week].fields.week_name] = weekdatas[week].fields.abnormality;
+            weekNames.push(weekdatas[week].fields.week_name);
+        }
+        console.log(weekData);
+        console.log(weekabnormalData);
+        console.log(weekNames);
+        
+        const columnNames = ['Column 1', 'Column 2', 'Column 3', 'Column 4', 'Column 5', 'Column 6', 'Column 7', 'Column 8', 'Column 9', 'Column 10', 'Column 11', 'Column 12', 'Column 13', 'Column 14', 'Column 15', 'Column 16', 'Column 17', 'Column 18', 'Column 19', 'Column 20', 'Column 21', 'Column 22'];
+        
         const processNumbersUrl = '{{ process_inetegers_url }}';
 
         document.addEventListener('DOMContentLoaded', () => {
@@ -396,6 +410,7 @@
 
                     columnNames.forEach(columnName => {
                         const td = document.createElement('td');
+                        td.style.border = '1px solid #289a28';
                         const index = columnNames.indexOf(columnName);
                         td.textContent = weekDataArray[index] || '0';
                         weekRow.appendChild(td);
