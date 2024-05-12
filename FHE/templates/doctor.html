@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Dr. [Doctor's Name] - Patient List</title>
+  <title>Dr. {{ userdata.user }} - Patient List</title>
   {% load static %} 
   <style>
     body {
@@ -59,12 +59,14 @@
     <thead>
       <tr>
         <th>Patient Name</th>
-        <th>Last Visited</th>
+        
       </tr>
     </thead>
     <tbody>
      
       <script>
+
+        console.log('{{ doctordata }}')
         const patientdatas =JSON.parse('{{ patientdatas|safe }}');
         console.log(patientdatas);
          for (let patient in patientdatas) {
@@ -79,9 +81,9 @@
           patientName.appendChild(patientLink);
           row.appendChild(patientName);
           
-          const lastVisited = document.createElement('td');
-          lastVisited.textContent = '{{ patient.fields.last_visited }}';
-          row.appendChild(lastVisited);
+          // const lastVisited = document.createElement('td');
+          // lastVisited.textContent = '{{ patient.fields.last_visited }}';
+          // row.appendChild(lastVisited);
           
           const deleteButton = document.createElement('td');
           const deleteButtonElement = document.createElement('button');

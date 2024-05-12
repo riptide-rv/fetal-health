@@ -35,5 +35,9 @@ urlpatterns = [
     path('addpatient/', views.addpatient_view, name='addpatient'),
     path('add_patient/', views.add_patient, name='add_patient'),
     path('deletepatient/<str:uuid_>/', views.delete_patient, name='delete_patient'),
+    path('view_report/<str:uuid_>/', views.view_report, name='view_report'),
+    path('contact/', views.view_contact, name='contact'),
+    path('chart/<str:uuid_>/<int:chart_type>/', views.view_chart, name='chart'),
+    path('', views.view_home, name='home')
     
 ] + staticfiles_urlpatterns()

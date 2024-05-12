@@ -243,14 +243,14 @@
 
 <script>
     document.getElementById("contactUsButton").addEventListener("click", function() {
-        window.location.href = "contact.html";
+        window.location.href = "/contact";
     });
 </script>
 
                 <div class="get-started-container">
                     <button id="profileButton">My Profile</button>  <script>
                         document.getElementById("profileButton").addEventListener("click", function() {
-                          window.location.href = "doc.html";
+                          window.location.href = "/doctor";
                         });
                       </script>
                       
@@ -282,6 +282,7 @@
         <div id="add-week-dialog" class="dialog">
             <span class="close-btn" onclick="closeAddWeekDialog()">&times;</span>
             <h2>Add Week Data</h2>
+            <div class="input">
             <form id="week-form">
                 <table>
                     <thead>
@@ -291,8 +292,11 @@
                         <tr></tr>
                     </tbody>
                 </table>
-                <button type="submit">Submit</button>
+               
             </form>
+        </div>
+        <button id='submit-week-form' type="submit">Submit</button>
+        
         </div>
     </div>
     <div class="green-line"></div>
@@ -304,10 +308,35 @@
             </div>
             <div class="graph-buttons">
                 <button id="button1">HEART RATE</button>
+                <script>
+                    document.getElementById("button1").addEventListener("click", function() {
+                        window.location.href = "/chart/"+ '{{ patientdata.uuid }}' + "/"+"0/";
+                    });
+                 </script>
                 <button id="button2">ACCELERATIONS PER SEC</button>
+                <script>
+                    document.getElementById("button2").addEventListener("click", function() {
+                        window.location.href = "/chart/"+ '{{ patientdata.uuid }}' + "/"+"1/";
+                    });
+                 </script>
                 <button id="button3">UTERINE CONTRACTIONS PER SEC</button>
+                <script>
+                    document.getElementById("button3").addEventListener("click", function() {
+                        window.location.href = "/chart/"+ '{{ patientdata.uuid }}' + "/"+"3/";
+                    });
+                 </script>
                 <button id="button4">% OF TIME WITH ABNORMAL SHORT-TERM VARIABILITY</button>
+                <script>
+                    document.getElementById("button4").addEventListener("click", function() {
+                        window.location.href = "/chart/"+ '{{ patientdata.uuid }}' + "/"+"7/";
+                    });
+                 </script>
                 <button id="button5">% OF TIME WITH ABNORMAL LONG-TERM VARIABILITY</button>
+                <script>
+                    document.getElementById("button5").addEventListener("click", function() {
+                        window.location.href = "/chart/"+ '{{ patientdata.uuid }}' + "/"+"9/";
+                    });
+                 </script>
             </div>
         </div>
     </div>
@@ -322,6 +351,14 @@
 
 
     <script>
+        const generateButton = document.getElementById('generateReportButton');
+        generateButton.addEventListener('click', function() {
+            window.location.href = '/view_report/'+ '{{ patientdata.uuid }}' + '/';
+        });
+
+
+
+
        var weekdatas = JSON.parse('{{ weekdatas | safe }}');
         console.log(weekdatas);
         console.log('weekdatas ',weekdatas)
@@ -338,7 +375,7 @@
         console.log(weekabnormalData);
         console.log(weekNames);
         
-        const columnNames = ['Column 1', 'Column 2', 'Column 3', 'Column 4', 'Column 5', 'Column 6', 'Column 7', 'Column 8', 'Column 9', 'Column 10', 'Column 11', 'Column 12', 'Column 13', 'Column 14', 'Column 15', 'Column 16', 'Column 17', 'Column 18', 'Column 19', 'Column 20', 'Column 21', 'Column 22'];
+        const columnNames = ['Column 1', 'Column 2', 'Column 3', 'Column 4', 'Column 5', 'Column 6', 'Column 7', 'Column 8', 'Column 9', 'Column 10', 'Column 11', 'Column 12', 'Column 13', 'Column 14', 'Column 15', 'Column 16', 'Column 17', 'Column 18', 'Column 19', 'Column 20', 'Column 21'];
         
         const processNumbersUrl = '{{ process_inetegers_url }}';
 
@@ -448,12 +485,13 @@
                 document.getElementById('week-dialog').style.display = 'none';
             }
 
-            document.getElementById('week-form').addEventListener('submit', (event) => {
+            document.getElementById('submit-week-form').addEventListener('click', (event) => {
                 event.preventDefault();
-                const formData = new FormData(event.target);
+                const form = document.getElementById('week-form')
+                const formData = new FormData(form);
                 const weekDataArray = [];
 
-                for (let i = 1; i <= columnNames.length - 1; i++) {
+                for (let i = 1; i <= columnNames.length; i++) {
                     const value = formData.get(`column_${i}`);
                     if (value) {
                         const numericValue = parseFloat(value);
@@ -509,7 +547,7 @@
 
 
                        
-
+                        form.reset();
                         renderWeekButtons();
                         closeAddWeekDialog();
                     }

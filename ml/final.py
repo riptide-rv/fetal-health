@@ -18,30 +18,6 @@ def predict_fetal_health(x):
    elif out[0] == 2:
       return "Abnormal"
    else:
-      return "Suspect"
-   return out
+      return "Pathological"
+   
 
-small_x=[
-   120.0,
-   0.0,     
-   0.0,
-   0.0,
-   0.0,
-   0.0,
-   0.0,
-   73.0,
-   0.5,
-   43.0,
-   2.4,
-   64.0,
-   62.0,
-   126.0,
-   2.0,
-   0.0,
-   120.0,
-   137.0,
-   121.0,
-   73.0,
-   1.0]
-result = predict_fetal_health(small_x)
-print(result)

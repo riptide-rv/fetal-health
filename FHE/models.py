@@ -13,7 +13,7 @@ class UserProfile(models.Model):
     
 class WeekData(models.Model):
     week_name = models.CharField(max_length=100)
-    username = models.CharField(max_length=100)
+    username = models.CharField(max_length=100) 
     abnormality = models.CharField(max_length=100)
     numbers = models.JSONField()
 

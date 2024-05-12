@@ -98,6 +98,7 @@
         .then(data => {
           console.log('Success:', data);
           alert('Patient added successfully!');
+          window.location.href = '/doctor';
         })
         .catch((error) => {
           console.error('Error:', error);

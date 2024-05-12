@@ -172,3 +172,41 @@ def addpatient_view(request):
         'range': 'addpatient'
     }
     return render(request, 'addpatient.html', context)
+
+def view_report(request, uuid_):
+    patientdata = PatientData.objects.filter(uuid=uuid_)[0]
+    weekdatas = WeekData.objects.filter(username=uuid_)
+    weekdatas_json = serialize('json', weekdatas)
+    userdata = UserProfile.objects.filter(user=request.user)[0]
+    print(userdata)
+    context = {
+        'range': 'view_report',
+        'patientdata': patientdata,
+        'weekdatas': weekdatas_json,
+        'userdata': userdata   
+    }
+    return render(request, 'report.html', context)
+
+@csrf_exempt
+def view_contact(request):
+    context = {
+        'range': 'contact'
+    }
+    return render(request, 'contact.html', context)
+
+def view_chart(request, uuid_, chart_type):
+    weekdatas = WeekData.objects.filter(username=uuid_)
+    weekdatas_json = serialize('json', weekdatas)
+
+    context = {
+        'range': 'chart',
+        'weekdatas': weekdatas_json,
+        'chart_type': chart_type,
+    }
+    return render(request, 'chart.html', context)
+
+def view_home(request):
+    context = {
+        'range': 'home'
+    }
+    return render(request, 'home.html', context)
