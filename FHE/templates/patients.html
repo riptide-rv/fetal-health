@@ -6,6 +6,15 @@
     <title>Your Webpage Title</title>
     {% load static %}
     <style>
+        .button {
+    background-color: #4CAF50;
+    padding: 10px 20px;    /* Green color for button */
+    color: white;
+    text-decoration: none;  /* Removes underline */
+    border: none;  /* Removes default button border */
+    border-radius: 4px; 
+    margin: 10px;  /* Adds margin around the button */
+  }
         body {
             margin: 0;
             padding: 0;
@@ -342,7 +351,7 @@
     </div>
     <div class="green-line"></div>
     <div class="generate-report-container">
-        <button id="generateReportButton">Generate Report</button>
+        <button class="button" id="generateReportButton">Generate Report</button>
 
 
 
