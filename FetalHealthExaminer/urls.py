@@ -29,9 +29,11 @@ urlpatterns = [
     path('signup/', views.signup_view, name='signup'),
     path('signup/success/', views.signup_success, name='signup_success'),
     path('process_integers/', views.process_integers, name='process_integers'),
-    path('patient/', views.patient_view, name='patient_view'),
+    path('patient/<str:uuid_>/', views.patient_view, name='patient_view'),
     path('signin/', views.signin, name='signin'),
     path('doctor/', views.doctor_view, name='doctor'),
     path('addpatient/', views.addpatient_view, name='addpatient'),
+    path('add_patient/', views.add_patient, name='add_patient'),
+    path('deletepatient/<str:uuid_>/', views.delete_patient, name='delete_patient'),
     
 ] + staticfiles_urlpatterns()

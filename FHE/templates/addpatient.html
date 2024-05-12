@@ -80,9 +80,9 @@
       const name = document.querySelector('#name').value;
       const age = document.querySelector('#age').value;
       const message = document.querySelector('#message').value;
-
+      console.log(name, age, message);
       // Log the values to the console
-      fetch('/addpatient', {
+      fetch('http://127.0.0.1:8000/add_patient/', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

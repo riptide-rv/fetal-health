@@ -93,12 +93,13 @@ def process_integers(request):
         data = json.loads(request.body)
         integers = data.get('integers', [])
         weekName = data.get('weekName', '')
+        uuid_ = data.get('uuid_', '')
         if not isinstance(integers, list):
             return JsonResponse({'error': 'Invalid data format. Expected a list of integers.'}, status=400)
         
         result = predict_fetal_health(integers)
    
-        WeekData.objects.create(username=request.user.username, week_name=weekName, numbers=integers,abnormality=result)
+        WeekData.objects.create(username=uuid_, week_name=weekName, numbers=integers,abnormality=result)
         userprofile = UserProfile.objects.filter(user=request.user)[0]
 
         print(userprofile.specialization)
@@ -115,19 +116,29 @@ def add_patient(request):
     doctorname = request.user.username
     age = data.get('age', '')
     relevantinfo = data.get('relevantinfo', '')
-    uuid = str(uuid.uuid4())
-    PatientData.objects.create(patientname=patientname, doctorname=doctorname, age=age, relevantinfo=relevantinfo, uuid=uuid)
+    uuid_ = str(uuid.uuid4())
+    print(relevantinfo)
+    PatientData.objects.create(patientname=patientname, doctorname=doctorname, age=age, relevantinfo=relevantinfo, uuid=uuid_)
     return JsonResponse({'success': True})
     
+@require_http_methods(["DELETE"])
+def delete_patient(request, uuid_):
+    PatientData.objects.filter(uuid=uuid_).delete()
+    return JsonResponse({"success": True})
 
-def patient_view(request):
-    weekdatas = WeekData.objects.filter(username=request.user.username)
+def patient_view(request, uuid_):
+    print(uuid_)
+    weekdatas = WeekData.objects.filter(username=uuid_)
+    patient = PatientData.objects.filter(uuid=uuid_)[0]
+    print(patient.relevantinfo)
     weekdatas_json = serialize('json', weekdatas)
     context = {
         'range': range(1, 23),
         'process_integers_url': reverse('process_integers'),
         'user' : request.user,
-        'weekdatas': weekdatas_json
+        'weekdatas': weekdatas_json,
+        'uuid_': uuid_,
+        'patientdata': patient
         }
     return render(request, 'patients.html', context)
 

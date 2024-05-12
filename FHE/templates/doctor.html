@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Dr. [Doctor's Name] - Patient List</title>
+  {% load static %} 
   <style>
     body {
       font-family: sans-serif;
@@ -46,7 +47,7 @@
 </head> 
 <body>
   <div class="upper-half">
-    <img src="logo.png" alt="Hospital Logo" class="uploaded-image">
+    <img src='{% static "logo.png" %}' alt="Hospital Logo" class="uploaded-image">
     <h2> </h2>
     <div class="doctor-info">
       <h1>Dr. {{ userdata.user }}</h1>
@@ -62,13 +63,49 @@
       </tr>
     </thead>
     <tbody>
-      {% for patient in patientdatas %}
-        <tr>
-          <td><a href="/patient">{{ patient.patientname }}</a></td>
-          <td>{{ patient.last_visited }}</td>
-          <td><button class="delete-button">Delete</button></td>
-        </tr>
-      {% endfor %}
+     
+      <script>
+        const patientdatas =JSON.parse('{{ patientdatas|safe }}');
+        console.log(patientdatas);
+         for (let patient in patientdatas) {
+          console.log(patient);
+          console.log(patientdatas[patient]);
+          const row = document.createElement('tr');
+          
+          const patientName = document.createElement('td');
+          const patientLink = document.createElement('a');
+          patientLink.href = '/patient/' + patientdatas[patient].fields.uuid + '/';
+          patientLink.textContent = patientdatas[patient].fields.patientname;
+          patientName.appendChild(patientLink);
+          row.appendChild(patientName);
+          
+          const lastVisited = document.createElement('td');
+          lastVisited.textContent = '{{ patient.fields.last_visited }}';
+          row.appendChild(lastVisited);
+          
+          const deleteButton = document.createElement('td');
+          const deleteButtonElement = document.createElement('button');
+          deleteButtonElement.className = 'delete-button';
+          deleteButtonElement.textContent = 'Delete';
+          deleteButton.appendChild(deleteButtonElement);
+          row.appendChild(deleteButton);
+          deleteButton.addEventListener('click', function() {
+            fetch('/deletepatient/' + patientdatas[patient].fields.uuid + '/', {
+              method: 'DELETE',
+              headers: {
+                'X-CSRFToken': '{{ csrf_token }}'
+              }
+            })
+            .then(response => {
+              if (response.ok) {
+                row.remove();
+              }
+            });
+          });
+          
+          document.querySelector('tbody').appendChild(row);
+         }
+      </script>
     </tbody>
   </table>
   <div style="text-align: left; margin-top: 10px;">
