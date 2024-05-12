@@ -100,7 +100,8 @@
 </head>
 <body>
     
-    <div class="container" id="pdf">
+    <div class="container" >
+        <div id="pdf">
         <header>
             <div class="header-info">
                 <h1>FETAL HEALTH REPORT</h1>
@@ -120,7 +121,7 @@
                         <div class="col-7">                          
                             <h4><strong>Contact No: {{ userdata.phone_number }}</strong></h4>
                         </div>
-                        <div class="col-10">                          
+                        <div class="col-4">                          
                             <h2><strong>Patient: {{ patientdata }}</strong></h2>
                         </div>
                         <div class="col-10">                          
@@ -173,15 +174,15 @@
         
         
         <footer>
-            <p>&copy; Hoping to help - team fetal health examiner</p>
+            <p>&copy; Hoping to help - fetalhealthexaminer@gmail.com - 123-456-7890</p>
         </footer>
     </div>
 
     </div>
     <div style="color:#7ed957 ; text-align: center; margin: 20px;">
-        <a href="path_to_your_file" download>
+       
             <button type="button" id="generate-button" class="btn btn-success" >Download Report</button>
-        </a>
+        
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
