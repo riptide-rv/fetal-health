@@ -19,3 +19,14 @@ class WeekData(models.Model):
 
     def __str__(self):
         return f"{self.username} - {self.week_name}"
+    
+class PatientData(models.Model):
+    patientname = models.CharField(max_length=100)
+    doctorname = models.CharField(max_length=100)
+    age = models.IntegerField()
+    relevantinfo = models.CharField(max_length=300)
+    uuid = models.CharField(max_length=100)
+
+    def __str__(self):
+        return self.patientname
+    

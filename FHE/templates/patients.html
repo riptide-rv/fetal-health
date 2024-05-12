@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Your Webpage Title</title>
+    {% load static %}
     <style>
         body {
             margin: 0;
@@ -103,7 +104,7 @@
             margin-right: 0;
         }
         .white-section button:not(:last-child) {
-            background-image: url('button.png');
+            background-image: url('{% static "button.png" %}');
             background-repeat: no-repeat;
             background-size: contain;
             padding-left: 60px;
@@ -257,7 +258,7 @@
             </div>
         </div>
         <div class="logo">
-            <img src="logo.png" alt="Logo">
+            <img src='{% static "logo.png" %}' alt="Logo">
         </div>
         <h2>patient name</h2>
         <h3>age:XX</h3>
@@ -299,7 +300,7 @@
         <h2 class="white-heading">Graph Generation</h2>
         <div class="new-container">
             <div>
-                <img src="./patient.png" alt="My image">
+                <img src='{% static "patient.png" %}' alt="My image">
             </div>
             <div class="graph-buttons">
                 <button id="button1">HEART RATE</button>

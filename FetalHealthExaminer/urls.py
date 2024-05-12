@@ -17,13 +17,21 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from FHE import views
+from django.conf import settings
+
+from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('login/', views.user_login, name='login'),
+    path('login/', views.login_view, name='login'),
+    path('login_user/', views.login_user, name='login_user'),
     path('home/', views.home, name='home'),
-    path('signup/', views.signup, name='signup'),
+    path('signup/', views.signup_view, name='signup'),
     path('signup/success/', views.signup_success, name='signup_success'),
     path('process_integers/', views.process_integers, name='process_integers'),
-     path('input_form/', views.input_form_view, name='input_form'),
-]
+    path('patient/', views.patient_view, name='patient_view'),
+    path('signin/', views.signin, name='signin'),
+    path('doctor/', views.doctor_view, name='doctor'),
+    path('addpatient/', views.addpatient_view, name='addpatient'),
+    
+] + staticfiles_urlpatterns()
